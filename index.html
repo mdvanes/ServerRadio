@@ -1,0 +1,88 @@
+<html>
+<head>
+    <title>Radio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <style>
+.controls {
+    text-align: center;
+}
+.controls img {
+    margin: 3em auto;
+}
+.log-row {
+    margin-top: 2em;
+}
+.log-row textarea, .log-row textarea[readonly] {
+    background-color: transparent;
+    border: none;
+    color: white;
+    height: 300px;
+}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-12">
+
+                <!-- <div class="jumbotron">
+                  <h1>Play Radio on Server</h1>
+                </div> -->
+
+                <div class="page-header">
+                    <h1>Play Radio on Server</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="row log-row">
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group well">
+                    <textarea class="form-control" placeholder="log" id="log" readonly="true">log</textarea>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 controls">
+                <button class="btn btn-success" id="play">
+                    <i class="glyphicon glyphicon-play"></i>
+                    play
+                </button>
+                <button class="btn btn-danger" id="stop">
+                    <i class="glyphicon glyphicon-stop"></i>
+                    stop
+                </button>
+                <button class="btn btn-default" id="plus">+</button>
+                <button class="btn btn-default" id="min">-</button>
+                <button class="btn btn-primary" id="info">
+                    <i class="glyphicon glyphicon-refresh"></i>
+                    info
+                </button>
+                <img src="img/3fm-logo.png" class="img-responsive" />
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript">
+$(document).ready(function() {
+    $('button').click(function() {
+        var id = $(this)[0].id;
+        // clear textarea unless "info"
+        if(id !== 'info') {
+            $('#log').val('');
+        }
+        $.get('state.php', {c: id}, function(data) {
+            var oldVal = $('#log').val();
+            $('#log').val(data.message + oldVal);
+        });
+    });
+});
+    </script>
+
+</body>
+</html>
